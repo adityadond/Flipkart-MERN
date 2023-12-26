@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 //routes
 const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/admin/auth");
+const categoryRoutes = require("./routes/category");
+const productRoutes = require("./routes/product");
 
 // Environment variable or you can say constants
 env.config();
@@ -28,9 +30,12 @@ mongoose
     console.error("Error connecting to database:", error);
   });
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use("/api", authRoutes); //adminRoutes
 app.use("/api", adminRoutes);
+app.use("/api", categoryRoutes);
+app.use("/api", productRoutes);
+
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
