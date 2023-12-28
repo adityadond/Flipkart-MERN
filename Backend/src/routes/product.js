@@ -1,32 +1,31 @@
 const express = require("express");
-const { requireSignin, adminMiddleware } = require("../common-middleware");
 const router = express.Router();
-const Product = require("../models/product");
+const {
+  requiresignin,
+  adminMiddleware,
+} = require("../common-middleware/index");
+const { createProduct } = require("../controllers/product");
+const multer = require("multer");
+const path = require("path");
 
-router.post("/product/create", requireSignin, adminMiddleware, (req, res) => {
-  // res.status(200).json({file:req.files,body:req.body});
-  const { name, price, description, category, quantity, createdBy } = req.body;
-  let productPictures = [];
-  if (req.files.length > 0) {
-    productPictures = req.files.map((file) => {
-      return { img: file.filename };
-    });
-  }
-  const product = new Product({
-    name: name,
-    slug: name.replace(/ /g, "-"),
-    price,
-    quantity,
-    description,
-    productPictures,
-    category,
-    createdBy: req.user._id,
-  });
-  product.save((error, product) => {
-    if (error) return res.status(400).json({ error });
-    if (product) {
-      res.status(201).json({ product });
-    }
-  });
+const shortid = require("shortid");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(path.dirname(__dirname), "uploads"));
+  },
+  filename: function (req, file, cb) {
+    cb(null, shortid.generate() + "-" + file.originalname);
+  },
 });
+const upload = multer({ storage });
+
+router.post(
+  "/product/create",
+  requiresignin,
+  adminMiddleware,
+  upload.array("productPicture"),
+  createProduct
+);
+
 module.exports = router;

@@ -35,6 +35,7 @@ const productSchema = new mongoose.Schema(
         img: { type: String },
       },
     ],
+
     reviews: [
       {
         userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
