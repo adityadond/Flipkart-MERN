@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 function Inputt({ label, placeholder, value, type, onChange, errorMessage }) {
   return (
     <>
-      <Form.Group controlId="formBasicEmail">
+      <Form.Group>
         <Form.Label>{label}</Form.Label>
         <Form.Control
           type={type}

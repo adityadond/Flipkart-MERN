@@ -13,12 +13,12 @@ function Header() {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav>
               <li className="nav-item">
-                <NavLink to="signIn" className="nav-link">
+                <NavLink to="/signIn" className="nav-link">
                   Sign In
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to="signUp" className="nav-link">
+                <NavLink to="/signUp" className="nav-link">
                   {" "}
                   Sign Up
                 </NavLink>
